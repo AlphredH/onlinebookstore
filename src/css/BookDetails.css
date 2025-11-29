@@ -1,0 +1,173 @@
+.book-details-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.back-btn {
+  background: white;
+  color: #764ba2;
+  border: 2px solid #764ba2;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #764ba2;
+  color: white;
+}
+
+.not-found {
+  background: white;
+  padding: 60px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.not-found h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.book-details-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+}
+
+.book-image-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.book-cover {
+  width: 300px;
+  height: 450px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.book-cover h2 {
+  color: white;
+  text-align: center;
+  font-size: 1.8rem;
+  line-height: 1.4;
+}
+
+.book-info-section h1 {
+  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.author {
+  color: #666;
+  font-size: 1.3rem;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.book-meta {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.book-meta span {
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  font-weight: normal;
+}
+
+.book-meta .genre {
+    margin-bottom: 0 !important;
+}
+
+.genre {
+  background: #764ba2;
+  color: white;
+  font-weight: bold;
+}
+
+.year, .pages {
+  background: #e8e8e8;
+  color: #555;
+}
+
+.description {
+  margin-bottom: 30px;
+}
+
+.description h3 {
+  color: #764ba2;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 10px;
+}
+
+.description p {
+  color: #333;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.price-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-top: 30px;
+  border-top: 2px solid #eee;
+}
+
+.price {
+  color: #667eea;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.add-to-cart-btn {
+  flex: 1;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .book-details-card {
+    grid-template-columns: 1fr;
+  }
+  
+  .book-cover {
+    width: 100%;
+    max-width: 300px;
+  }
+}
