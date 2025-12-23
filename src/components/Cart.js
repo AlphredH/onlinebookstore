@@ -1,7 +1,56 @@
 import '../css/Cart.css';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { ordersAPI } from '../services/api';
 
-function Cart({ cart, onRemove, onUpdateQuantity }) {
+function Cart({ cart, onRemove, onUpdateQuantity, onClearCart }) {
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [shippingAddress, setShippingAddress] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const { isAuthenticated, user } = useAuth();
+  const navigate = useNavigate();
+
   const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+  const handleCheckoutClick = () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    setShippingAddress(user.address || '');
+    setShowCheckout(true);
+  };
+
+  const handlePlaceOrder = async () => {
+    if (!shippingAddress.trim()) {
+      setError('Please enter a shipping address');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const orderData = {
+        items: cart.map(item => ({
+          book_id: item.id,
+          quantity: item.quantity
+        })),
+        shipping_address: shippingAddress
+      };
+
+      await ordersAPI.create(orderData);
+      
+      onClearCart();
+      setShowCheckout(false);
+      navigate('/orders');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to place order');
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="cart-container">
@@ -13,7 +62,7 @@ function Cart({ cart, onRemove, onUpdateQuantity }) {
       {cart.length === 0 ? (
         <div className="empty-cart">
           <p>Your cart is empty</p>
-          <a href="/" className="continue-shopping">Continue Shopping</a>
+          <a href="/books" className="continue-shopping">Continue Shopping</a>
         </div>
       ) : (
         <>
@@ -78,7 +127,39 @@ function Cart({ cart, onRemove, onUpdateQuantity }) {
                 <span>Total Price:</span>
                 <span>${totalPrice.toFixed(2)}</span>
               </div>
-              <button className="checkout-btn">Proceed to Checkout</button>
+              
+              {!showCheckout ? (
+                <button className="checkout-btn" onClick={handleCheckoutClick}>
+                  Proceed to Checkout
+                </button>
+              ) : (
+                <div className="checkout-form">
+                  <h3>Shipping Address</h3>
+                  {error && <div className="error-message">{error}</div>}
+                  <textarea
+                    value={shippingAddress}
+                    onChange={(e) => setShippingAddress(e.target.value)}
+                    placeholder="Enter your shipping address"
+                    rows="4"
+                  />
+                  <div className="checkout-buttons">
+                    <button 
+                      className="place-order-btn" 
+                      onClick={handlePlaceOrder}
+                      disabled={loading}
+                    >
+                      {loading ? 'Placing Order...' : 'Place Order'}
+                    </button>
+                    <button 
+                      className="cancel-btn" 
+                      onClick={() => setShowCheckout(false)}
+                      disabled={loading}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </>

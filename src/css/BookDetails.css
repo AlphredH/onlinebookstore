@@ -41,13 +41,13 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 40px;
+  gap: 20px;
 }
 
 .book-image-section {
   display: flex;
-  justify-content: center;
   align-items: flex-start;
+  padding-left: 8px;
 }
 
 .book-cover {
@@ -67,6 +67,14 @@
   text-align: center;
   font-size: 1.8rem;
   line-height: 1.4;
+}
+
+.book-cover-image {
+  width: 300px;
+  height: 450px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .book-info-section h1 {

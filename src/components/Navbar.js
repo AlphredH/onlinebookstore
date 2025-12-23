@@ -1,9 +1,18 @@
 import '../css/Navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { useAuth } from '../context/AuthContext';
 
 function Navbar({ cartCount }) {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -25,6 +34,33 @@ function Navbar({ cartCount }) {
           <Link to="/contact" className="navbar-link">
             Contact
           </Link>
+          
+          {user ? (
+            <>
+              <Link to="/orders" className="navbar-link">
+                My Orders
+              </Link>
+              {user.is_admin && (
+                <Link to="/admin" className="navbar-link">
+                  Admin Panel
+                </Link>
+              )}
+              <span className="navbar-user">Hello, {user.username}</span>
+              <button onClick={handleLogout} className="navbar-btn">
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="navbar-link">
+                Login
+              </Link>
+              <Link to="/register" className="navbar-btn-link">
+                Register
+              </Link>
+            </>
+          )}
+          
           <Link to="/cart" className="navbar-link cart-link">
             <ShoppingCartIcon />
             <span>Cart</span>
